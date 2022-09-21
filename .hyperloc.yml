@@ -1,0 +1,30 @@
+- project:
+    name: "test-github-repo-1"
+    configuration: config1
+    source-language: en_US
+    target-languages:
+      - ja_JP
+      - de_DE
+      - pl_PL
+    workflows: 
+      - name: auto
+        provider: memsource
+        priority: 1
+        tms-project-name: "{project.name}-{project.branch}-auto"
+        parameters:
+          template: CoreUI_Auto
+    files:
+      - source:
+          pattern: test-auto/en/*.json
+        target: "{var.lang}/{file.name}"
+        type: json
+      - source:
+          pattern: test-auto/en/*.txt
+        target: "{var.lang}/{file.name}"
+        type: txt
+    variables:
+      - name: lang
+        values:
+          - de_DE: "de"
+            pl_PL: "pl"
+            ja_JP: "ja"
